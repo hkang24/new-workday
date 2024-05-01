@@ -17,6 +17,8 @@ import { Toaster } from "@/components/ui/sonner"
 
 import Banner from "@/components/banners/banner"
 
+import Question from './components/question';
+
 
 
 import Shell from "../components/Shell"
@@ -28,6 +30,7 @@ export default function Page() {
 
     const [majors, setMajors] = useState([]);
     const [skills, setSkills] = useState([]);
+    const [questions, setQuestions] = useState([]);
 
     const [saved, setSaved] = useState(false);
 
@@ -56,6 +59,18 @@ export default function Page() {
         setSkills([...skills, skill]);
     }
 
+    function onAddQuestion(e) {
+        e.preventDefault();
+        const question = document.getElementById('question').value;
+
+        setQuestions([...questions, question]);
+    }
+
+    function onDeleteQuestion(index) {
+        const newQuestions = questions.filter((question, i) => i !== index);
+        setQuestions(newQuestions);
+    }
+
     async function onFormSubmit(event) {
         event.preventDefault();
         const formElement = document.getElementById('form');
@@ -65,6 +80,7 @@ export default function Page() {
             console.log(`${key}: ${value}`);
         }
         const gpa = formData.get('gpa') ? formData.get('gpa') : null;
+        
         if (degreeRequired) {
             const res = await supabase.from('jobs').insert([{
                 company: user.company,
@@ -75,7 +91,8 @@ export default function Page() {
                 degree_required: degreeRequired,
                 majors: majors,
                 skills: skills,
-                recruiter_id: user.id
+                recruiter_id: user.id,
+                additional_questions: questions
             }]);
             if (res.error) {
                 console.log('error', res);
@@ -90,7 +107,8 @@ export default function Page() {
                 description: formData.get('description'),
                 gpa: gpa,
                 degree_required: degreeRequired,
-                recruiter_id: user.id
+                recruiter_id: user.id,
+                additional_questions: questions
             }]);
             if (res.error) {
                 console.log('error', res);
@@ -112,6 +130,7 @@ export default function Page() {
         setDegreeRequired(false);
         setMajors([]);
         setSkills([]);
+        setQuestions([]);
     }
 
     useEffect(() => {
@@ -135,7 +154,7 @@ export default function Page() {
 
                     <div className='bg-white rounded-lg p-5'>
                         <h1 className="text-2xl font-bold text-blue mb-3 border-b-light-blue">Create Job Listing for <span className='text-orange'>{user?.company}</span></h1>
-                        <div className='h-[calc(100vh-8.5rem)]'>
+                        <ScrollArea className='h-[calc(100vh-8.5rem)]'>
                             <form id='form' onSubmit={(e) => onFormSubmit(e)} className='flex flex-col justify-between h-[calc(100vh-8.5rem)]'>
                                 <div className="space-y-12">
                                     <div className="pb-10">
@@ -277,10 +296,43 @@ export default function Page() {
                                                 </div>
                                             </div>
                                         }
+                                        <div className="sm:col-span-3 mt-7">
+                                            <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900">
+                                                Additional Questions
+                                            </label>
+                                            <div className="mt-2 flex rounded-md shadow-sm">
+                                                <div className="relative flex flex-grow items-stretch focus-within:z-10">
+
+                                                    <input
+                                                        type="text"
+                                                        name="question"
+                                                        id="question"
+                                                        className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
+                                                        placeholder="ex. Why do you want to work at our company?"
+                                                    />
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => onAddQuestion(e)}
+                                                    className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                >
+                                                    <PlusIcon className="h-4 w-4 text-gray-900" />
+                                                    Add Question
+                                                </button>
+                                            </div>
+                                            <div className='mt-2 flex flex-col gap-y-2'>
+                                                {questions.map((question, index) => (
+                                                    <Question onDelete={() => onDeleteQuestion(index)} key={index}>{question}</Question>
+                                                ))}
+                                                
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-end gap-x-6">
+                                <div className="flex items-center justify-end gap-x-6 sticky bottom-0 bg-white pt-4">
                                     <button type="button" onClick={(e) => clearForm(e)} className="text-sm font-semibold leading-6 text-gray-900">
                                         Clear
                                     </button>
@@ -291,13 +343,15 @@ export default function Page() {
                                         Create Listing
                                     </button>
                                 </div>
+
                             </form>
-                        </div>
+                        </ScrollArea>
                     </div>
 
-                </div>
-            </Shell>
-            {saved && <Banner>Job Listing Created</Banner>}
+                </div >
+            </Shell >
+            {saved && <Banner>Job Listing Created</Banner>
+            }
         </>
         // </div>
     )
