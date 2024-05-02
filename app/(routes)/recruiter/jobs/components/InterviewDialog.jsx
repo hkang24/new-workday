@@ -12,11 +12,11 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-export default function ContactDialog({ contactInfo }) {
+export default function InterviewDialog({ contactInfo, changeStatus }) {
     return (
-        <AlertDialog>
+        <AlertDialog onOpenChange={() => changeStatus('interview')}>
             <AlertDialogTrigger>
-                <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Contact Applicant</button>
+                <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Interview</button>
             </AlertDialogTrigger>
             <AlertDialogContent className='w-[25rem]'>
                 <AlertDialogHeader>

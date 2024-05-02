@@ -13,9 +13,10 @@ import styles from './styles.module.css';
 import StatusTag from '@/components/statusTag';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
-import ContactDialog from './components/ContactDialog';
+import InterviewDialog from './components/InterviewDialog';
 import HireDialog from './components/HireDialog';
 import RejectDialog from './components/RejectDialog';
+import ContactDialog from './components/ContactDialog';
 
 const jobs = [
     { title: 'Software Engineer', created: '1 mo ago', numApplicants: "153 applicants", status: '23 unseen', location: "San Francisco, CA" },
@@ -111,7 +112,14 @@ export default function JobsRecruiter() {
                 const applicationsInfoCopy = [...applicationsInfo];
                 applicationsInfoCopy[selected].status = 'Fulfilled';
                 setApplicationsInfo(applicationsInfoCopy);
-                await supabase.from('jobs').update({ status: 'Fulfilled' }).match({ id: jobs[selected].id });
+                const jobsCopy = [...jobs];
+                jobsCopy[selected].status = 'Fulfilled';
+                setJobs(jobsCopy);
+                const { data, error } = await supabase.from('jobs').update({ status: 'Fulfilled' }).match({ id: jobs[selected].id });
+                if (error) console.log('error', error);
+                else {
+                    console.log(data);
+                }
             }
         }
     }
@@ -215,12 +223,12 @@ export default function JobsRecruiter() {
                                                             <th scope="col" className="px-3 py-3.5 text-left text-sm font-normal text-white w-12 " >
                                                                 School
                                                             </th>
-                                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-normal text-white ">
-                                                                Major
-                                                            </th>
                                                             {/* <th scope="col" className="px-3 py-3.5 text-left text-sm font-normal text-white ">
-                                                                GPA
+                                                                Major
                                                             </th> */}
+                                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-normal text-white ">
+                                                                Status
+                                                            </th>
                                                             <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
 
                                                             </th>
@@ -228,15 +236,15 @@ export default function JobsRecruiter() {
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200 bg-white">
                                                         {applicants.map((applicant, index) => (
-                                                            <tr key={index} onClick={() => setSelectedApplicant(applicant)}>
+                                                            <tr key={index} onClick={() => setSelectedApplicant(applicant)} className={(selectedApplicant && applicant.id == selectedApplicant.id) ? 'bg-light-blue' : applicant.status === 'hired' ? 'bg-green-100' : applicant.status === 'rejected' ? 'bg-red-100' : ''}>
                                                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 truncate">
                                                                     {applicant.first_name} {applicant.last_name}
                                                                 </td>
                                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 w-12 truncate overflow-hidden" style={{ maxWidth: '8rem', textOverflow: 'ellipsis' }}>
                                                                     {applicant.school}
                                                                 </td>
-                                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate">{applicant.major}</td>
-                                                                {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{applicant.gpa}</td> */}
+                                                                {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate">{applicant.major}</td> */}
+                                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{applicant.status}</td>
                                                                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                                     <a href="#" className="text-blue hover:text-dark-blue">
                                                                         See more
@@ -296,29 +304,24 @@ export default function JobsRecruiter() {
                                                                 ))}
 
 
-                                                                {/* <div className="col-span-2">
-                                                                    <p className='text-sm' style={{ 'fontWeight': '600' }}>Why do you want to work for this company?</p>
-                                                                    <p className='text-sm' style={{ 'fontWeight': '500' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero justo laoreet sit amet cursus sit amet. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Amet consectetur adipiscing elit pellentesque.</p>
-                                                                </div>
-                                                                <div className="col-span-2">
-                                                                    <p className='text-sm' style={{ 'fontWeight': '600' }}>Tell us about a time where you made a mistake. How did you handle the situation?</p>
-                                                                    <p className='text-sm' style={{ 'fontWeight': '500' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero justo laoreet sit amet cursus sit amet. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Amet consectetur adipiscing elit pellentesque.</p>
-                                                                </div> */}
+                                                                
                                                             </div>
                                                         </ScrollArea>
                                                         <div className="flex w-full justify-around">
-                                                            {(selectedApplicant.status === 'unseen' || selectedApplicant.status === 'seen') ?
+                                                            {(selectedApplicant.status === 'unseen' || selectedApplicant.status === 'seen' && jobs[selected].status === 'open') ?
                                                                 <>
-                                                                    <ContactDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
+                                                                    <InterviewDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                     <RejectDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                 </>
-                                                                : (selectedApplicant.status === 'interview') ?
+                                                                : (selectedApplicant.status === 'interview' && jobs[selected].status === 'open') ?
                                                                     <>
                                                                         <HireDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                         <RejectDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                     </>
                                                                     :
-                                                                    <></>
+                                                                    <>
+                                                                    <ContactDialog contactInfo={selectedContactInfo} />
+                                                                    </>
 
 
                                                             }
