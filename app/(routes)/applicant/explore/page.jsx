@@ -326,17 +326,17 @@ export default function Page() {
 
                                                                 </div>
                                                             </div>
-                                                            <button>Submit</button>
+                                                            <AlertDialogFooter className='pt-1'>
+                                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                <AlertDialogAction><button>Submit</button></AlertDialogAction>
+                                                            </AlertDialogFooter>
 
 
                                                         </form>
                                                     </ScrollArea>
                                                 </AlertDialogDescription>
                                             </AlertDialogHeader>
-                                            <AlertDialogFooter className='pt-1'>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction>Continue</AlertDialogAction>
-                                            </AlertDialogFooter>
+
                                         </AlertDialogContent>
                                     </AlertDialog>
                                 </div>
