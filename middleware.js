@@ -17,7 +17,7 @@ export async function middleware(req) {
   const {data, error} = await supabase.auth.getSession()
 
   if (!data.session) {
-    return NextResponse.redirect(new URL('/signin/recruiter', req.url))
+    return NextResponse.redirect(new URL('/', req.url))
   }
 
   return res
@@ -25,5 +25,5 @@ export async function middleware(req) {
 
 // Ensure the middleware is only called for relevant paths.
 export const config = {
-  matcher: ['/((?!api|fonts|icon.ico|signin|signup|auth|contexts|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|fonts|icon.ico|signin|signup|auth|contexts|_next/static|_next/image|.*\\.png$|^/$|^$).*)|(^/$)'],
 }
