@@ -21,50 +21,35 @@ import {
       icon: UserCircleIcon,
     },
     {
-      name: 'New & Improved UI',
-      description:
-        'Experience a fresh and modern user interface designed for simplicity and efficiency. Enjoy a clutter-free workspace with intuitive navigation and clear visual cues.',
-      href: '#',
-      icon:WrenchScrewdriverIcon,
-    },
-    {
       name: 'Unified Workspace',
       description:
         'Access all your work tools and information in one place. No more switching between multiple apps or tabs. Stay focused and productive with everything you need at your fingertips.',
       href: '#',
       icon: UsersIcon,
     },
+    {
+      name: 'New & Improved UI',
+      description:
+        'Experience a fresh and modern user interface designed for simplicity and efficiency. Enjoy a clutter-free workspace with intuitive navigation and clear visual cues.',
+      href: '#',
+      icon:WrenchScrewdriverIcon,
+    },
   ]
   const secondaryFeatures = [
-    {
-      name: 'Intuitive Job Search',
-      description: 'Easily find the perfect job opportunity with our intuitive search functionality. Filter by location, job type, and more to discover the ideal match for your skills and preferences.',
-      icon: DocumentMagnifyingGlassIcon,
-    },
     {
       name: 'Effortless Application Process',
       description: 'Streamline the job application process with our user-friendly interface. Submit your application seamlessly and track its progress all in one place.',
       icon: DocumentTextIcon,
     },
     {
-      name: 'Customizable Job Alerts',
-      description: 'Stay updated on new job openings that match your criteria. Set up personalized job alerts and receive notifications directly to your inbox, ensuring you never miss out on an opportunity.',
-      icon: BellIcon,
-    },
-    {
       name: 'Interactive Application Status',
-      description: 'Track the status of your job applications in real-time. Receive instant updates on application progress, interview invitations, and offer letters, keeping you informed every step of the way.',
+      description: 'Track the status of your job applications in real-time. Review past applications, interview details, and offer letters, allowing you to stay organized and informed throughout your job search journey.',
       icon: ArrowPathIcon,
     },
     {
       name: 'Seamless Communication',
       description: 'Connect effortlessly with employers and recruiters. Communicate directly within the platform, ask questions, and schedule interviews with ease.',
       icon: ChatBubbleLeftRightIcon,
-    },
-    {
-      name: 'Comprehensive Application History',
-      description: 'Access your complete job application history at any time. Review past applications, interview details, and offer letters, allowing you to stay organized and informed throughout your job search journey.',
-      icon: ClipboardIcon,
     },
 ];
 
@@ -197,28 +182,24 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-<<<<<<< HEAD
-                <img
-                  className="h-20"
-                  src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
-                  alt="Your Company"
-                />
-=======
-                <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
->>>>>>> cbd07e8ae6df74c59c9c97683a0caf251755ba7f
-
+               <img
+               src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
+               alt="Logo"
+               width={100}
+               height={200}
+               className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10"
+              />
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
                 <h1 className="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">
                   Making the job process easier, for employers and applicants!
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-300">
-                  Welcome to EasyApply – the ultimate platform for universities, employers, and employees alike!
-                  Whether you're a university, employer, or employee, EasyApply offers a seamless experience tailored to your needs.
+                  Welcome to EasyApply – An easy to use management tool to make the job process between both recruiters and applicants!  Our goal is to:
                   <br/><br/>
-                  1. Apply for a job effortlessly, whether it's within a university or a company.
+                  1. Revolutionize the Workday interface by improving upon their existing features
                   <br/><br/>
-                  2. Post job listings with ease, providing opportunities for others to apply and join your institution or organization.
+                  2. Improve the recruiter-applicant relationship by creating a transparent job application process!
                 </p>
 
                 <div className="mt-10 flex items-center gap-x-6">
