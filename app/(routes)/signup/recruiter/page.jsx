@@ -34,7 +34,7 @@ export default function Page() {
         <div className="flex min-h-screen flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8">
             <img
                 className="h-10 w-auto"
-                src="https://upload.wikimedia.org/wikipedia/commons/8/80/Workday_logo.svg"
+                src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=awcjoqag&dl=0&raw=g"
                 alt="Your Company"
             />
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
