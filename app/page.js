@@ -234,7 +234,7 @@ import {
               <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
                 <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
                   <img
-                    src="https://techcrunch.com/wp-content/uploads/2022/09/CIO-image_PEX-Today_Homepage_Manager_Desktop_Now_1440_Rising2022-1.jpg"
+                    src="https://drive.google.com/drive/u/1/folders/1-t-_xDG1wNp2AIPmvHTM3tokYURNxmjN"
                     alt="App screenshot"
                     width={100}
                     height={200}
@@ -339,7 +339,7 @@ import {
             <div className="relative overflow-hidden pt-16">
               <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <img
-                  src="https://images.squarespace-cdn.com/content/v1/59ae20e5be42d663bf36b1d5/1583815862307-4Q3HCYR628HM9FRTCYXE/apply-hifi-progress.png"
+                  src="https://drive.google.com/thumbnail?id={1Of8EiDlSBjHbZ2aJiPKj5SyCwDqhNajp}&sz=w1000"
                   alt="App screenshot"
                   className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10"
                   width={2432}
