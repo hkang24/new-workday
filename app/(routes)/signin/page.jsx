@@ -9,7 +9,7 @@ export default function SignInPage() {
               <div>
                 <img
                   className="h-10 w-auto"
-                  src="https://upload.wikimedia.org/wikipedia/commons/8/80/Workday_logo.svg"
+                  src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=awcjoqag&dl=0&raw="
                   alt="Your Company"
                 />
                 <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
