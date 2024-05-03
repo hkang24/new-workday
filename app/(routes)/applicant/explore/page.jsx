@@ -105,6 +105,7 @@ export default function Page() {
         setSkills([]);
         setJobs(jobsCopy);
         setSaved(true);
+        setSelected(null);
     }
 
     // useEffect(() => {
@@ -317,6 +318,7 @@ export default function Page() {
                                                                                             id="gpa"
                                                                                             defaultValue={user?.gpa}
                                                                                             required
+                                                                                            step="0.01"
                                                                                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                                                         />
                                                                                     </div>

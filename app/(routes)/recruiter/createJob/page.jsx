@@ -81,7 +81,7 @@ export default function Page() {
             console.log(`${key}: ${value}`);
         }
         const gpa = formData.get('gpa') ? formData.get('gpa') : null;
-        
+
         if (degreeRequired) {
             const res = await supabase.from('jobs').insert([{
                 company: user.company,
@@ -220,7 +220,7 @@ export default function Page() {
                                                         type="number"
                                                         name="gpa"
                                                         id="gpa"
-                                                        required
+                                                        
                                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                     />
                                                 </div>
@@ -235,8 +235,8 @@ export default function Page() {
                                                 </div>
                                             </div>
                                         </div>
-                                        {degreeRequired &&
-                                            <div className='sm:grid sm:grid-cols-2 mt-8 gap-x-7'>
+                                        <div className='sm:grid sm:grid-cols-2 mt-8 gap-x-7'>
+                                            {degreeRequired &&
                                                 <div className="sm:col-span-1">
                                                     <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900 mb-2">
                                                         Majors
@@ -268,39 +268,41 @@ export default function Page() {
 
                                                     </div>
                                                 </div>
-                                                <div className="sm:col-span-1">
-                                                    <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900">
-                                                        Skills
-                                                    </label>
-                                                    <div className="mt-2 flex rounded-md shadow-sm">
-                                                        <div className="relative flex flex-grow items-stretch focus-within:z-10">
 
-                                                            <input
-                                                                type="skill"
-                                                                name="skill"
-                                                                id="skill"
-                                                                className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
-                                                                placeholder="ex. React"
-                                                            />
-                                                        </div>
-                                                        <button
-                                                            type="button"
-                                                            onClick={(e) => onAddSkill(e)}
-                                                            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            <PlusIcon className="h-4 w-4 text-gray-900" />
-                                                            Add Skills
-                                                        </button>
-                                                    </div>
-                                                    <div className="mt-2 p-2 w-full border border-gray-200 min-h-20 rounded-lg flex flex-wrap gap-x-1">
-                                                        {skills.map((skill, index) => (
-                                                            <StatusTag key={index} status={skill} />
-                                                        ))}
 
+                                            }
+                                            <div className="sm:col-span-1">
+                                                <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900">
+                                                    Skills
+                                                </label>
+                                                <div className="mt-2 flex rounded-md shadow-sm">
+                                                    <div className="relative flex flex-grow items-stretch focus-within:z-10">
+
+                                                        <input
+                                                            type="skill"
+                                                            name="skill"
+                                                            id="skill"
+                                                            className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
+                                                            placeholder="ex. React"
+                                                        />
                                                     </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => onAddSkill(e)}
+                                                        className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                    >
+                                                        <PlusIcon className="h-4 w-4 text-gray-900" />
+                                                        Add Skills
+                                                    </button>
+                                                </div>
+                                                <div className="mt-2 p-2 w-full border border-gray-200 min-h-20 rounded-lg flex flex-wrap gap-x-1">
+                                                    {skills.map((skill, index) => (
+                                                        <StatusTag key={index} status={skill} />
+                                                    ))}
+
                                                 </div>
                                             </div>
-                                        }
+                                        </div>
                                         <div className="sm:col-span-3 mt-7">
                                             <label htmlFor="location" className="block text-sm font-medium leading-6 text-gray-900">
                                                 Additional Questions
@@ -329,17 +331,17 @@ export default function Page() {
                                                 {questions.map((question, index) => (
                                                     <Question onDelete={() => onDeleteQuestion(index)} key={index}>{question}</Question>
                                                 ))}
-                                                
+
                                             </div>
                                         </div>
                                         <div className="sm:col-span-1 mt-7 flex items-center">
-                                                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900 mr-3">
-                                                    Allow applicant to contact you?
-                                                </label>
-                                                {/* <div className="mt-5 w-full flex justify-center"> */}
-                                                    <Checkbox id='contact' checked={contact} onCheckedChange={setContact} />
-                                                {/* </div> */}
-                                            </div>
+                                            <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900 mr-3">
+                                                Allow applicant to contact you?
+                                            </label>
+                                            {/* <div className="mt-5 w-full flex justify-center"> */}
+                                            <Checkbox id='contact' checked={contact} onCheckedChange={setContact} />
+                                            {/* </div> */}
+                                        </div>
 
 
                                     </div>

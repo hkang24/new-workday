@@ -111,6 +111,7 @@ export default function Page() {
                                     type="number"
                                     autoComplete="gpa"
                                     required
+                                    step="0.01"
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
                                 />
                             </div>
