@@ -8,6 +8,8 @@ import {
   } from '@heroicons/react/20/solid'
   import { UserCircleIcon, WrenchScrewdriverIcon, UsersIcon } from '@heroicons/react/24/outline'
 
+  import Image from 'next/image';
+
   // import { useNavigate } from 'next/navigation';
 
   const primaryFeatures = [
@@ -195,11 +197,15 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+<<<<<<< HEAD
                 <img
                   className="h-20"
                   src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
                   alt="Your Company"
                 />
+=======
+                <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
+>>>>>>> cbd07e8ae6df74c59c9c97683a0caf251755ba7f
 
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
