@@ -14,7 +14,7 @@ import {
 
 export default function HireDialog({ contactInfo, changeStatus }) {
     return (
-        <AlertDialog onOpenChange={() => changeStatus('hired')}>
+        <AlertDialog onOpenChange={() => changeStatus('Hired')}>
             <AlertDialogTrigger>
                 <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Hire</button>
             </AlertDialogTrigger>

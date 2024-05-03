@@ -8,7 +8,7 @@ export async function POST(request) {
     try {
       console.log('in signup route');
       const formData = await request.formData();
-      const { email, password, firstName, lastName } = Object.fromEntries(formData);
+      const { email, password, firstName, lastName , school, gpa, phone} = Object.fromEntries(formData);
       // console.log(email, password, country, firstName, lastName, username, zip);
   
       const { data, error } = await supabase.auth.signUp({ email, password , options: {
@@ -21,7 +21,7 @@ export async function POST(request) {
       }
       console.log('User created', data.user);
       const id = data.user.id;
-      await supabase.from('users').insert([{ id, email, first_name: firstName, last_name: lastName, applicant: true }]);
+      await supabase.from('users').insert([{ id, email, first_name: firstName, last_name: lastName, applicant: true , school, gpa, phone_number: phone}]);
       const { data: userData, error: userError } = await supabase.from('users').select('*').eq('id', id);
       if (!userData) {
         console.log('User creation failed', userError.message);

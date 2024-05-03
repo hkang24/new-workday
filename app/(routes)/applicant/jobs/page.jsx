@@ -1,13 +1,20 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import axios from 'axios';
 
 import Shell from '../components/shell';
 
 import JobRow from './components/jobRow';
 import { LocaleRouteNormalizer } from 'next/dist/server/future/normalizers/locale-route-normalizer';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 import StatusTag from '@/components/statusTag';
+
+import ContactDialog from './components/ContactDialog';
 
 const jobs = [
     { title: 'Software Engineer', company: 'Google', location: 'Mountain View, CA', status: 'Applied' },
@@ -17,8 +24,63 @@ const jobs = [
 
 export default function Page() {
 
+    const supabase = createClientComponentClient();
+    const [jobs, setJobs] = useState([]);
+    const [applications, setApplications] = useState([]);
+    const [contactInfo, setContactInfo] = useState(null);
+
     const [selected, setSelected] = useState(null);
 
+    async function getJobs() {
+        const { data: userData, error: userError } = await supabase.from('users').select('*');
+        const user = userData[0];
+        const { data: applicationsData, error: applicationsError } = await supabase.from('applications').select('*').eq('applicant_id', user.id);
+        if (applicationsError) {
+            console.log('error', applicationsError);
+        }
+        console.log(applicationsData);
+
+        const uniqueApplications = applicationsData.filter((app, index, self) =>
+            index === self.findIndex((t) => (
+                t.job_id === app.job_id
+            ))
+        );
+
+
+        const jobsArray = [];
+
+        for (let i = 0; i < uniqueApplications.length; i++) {
+            const { data: jobData, error: jobError } = await supabase.from('jobs').select('*').eq('id', uniqueApplications[i].job_id);
+            if (jobError) {
+                console.log('error', jobError);
+            }
+            console.log(jobData);
+            jobsArray.push(jobData[0]);
+        }
+
+
+        console.log(jobsArray);
+        setJobs(jobsArray);
+        setApplications(uniqueApplications);
+
+
+    }
+
+    useEffect(() => {
+        if (selected !== null) {
+            async function getRecruiter() {
+                const response = await axios.get(`/api/getRecruiter?id=${jobs[selected].recruiter_id}`);
+                console.log('response', response);
+                setContactInfo(response.data);
+            }
+            getRecruiter();
+        }
+        
+    }, [selected]);
+
+    useEffect(() => {
+        getJobs();
+    }, []);
 
 
     return (
@@ -29,7 +91,7 @@ export default function Page() {
                         <h1 className='text-2xl font-regular text-center py-2 border border-blue bg-blue text-white rounded-b-lg h-full'>Applied</h1>
                         <div className='flex flex-col divide-y divide-solid bg-white h-full'>
                             {jobs.map((job, index) => {
-                                return <JobRow key={index} index={index} job={job} setSelected={setSelected} selected={selected} />
+                                return <JobRow key={index} index={index} job={job} setSelected={setSelected} selected={selected} application={applications[index]} />
                             })}
                             <hr />
                             {/* <JobRow job={{ title: 'Software Engineer', company: 'Google', location: 'Mountain View, CA', status: 'Applied' }} />
@@ -39,59 +101,60 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-between grow  relative">
-                        {selected === null ?
+                        {selected === null || jobs.length === 0 ?
                             <div className='flex justify-center items-center h-full'>No job selected</div>
                             :
                             <>
 
+
                                 <div className="flex flex-col grow relative" style={{ 'backgroundColor': 'white' }}>
                                     <h1 className='border-b flex items-center justify-between w-full grow-0 text-2xl font-regular h-[3.3rem] rounded-b-md  px-5 text-white bg-blue'><span>{'Software Engineer'}</span></h1>
-                                    <div className='flex flex-col p-5'>
-                                        <p className='text-md' style={{ 'fontWeight': '600' }}>{'Google'}</p>
-                                        <p className='text-md' style={{ 'fontWeight': '500' }}>{'Menlo Park, CA'}</p>
+                                    <ScrollArea className={`flex flex-col p-5 ${jobs[selected].contact ? 'h-[87vh]' : 'h-[92vh]'}`}>
+                                        <p className='text-md' style={{ 'fontWeight': '600' }}>{jobs[selected].company}</p>
+                                        <p className='text-md' style={{ 'fontWeight': '500' }}>{jobs[selected].location}</p>
 
                                         <p className='text-sm mt-6' style={{ 'fontWeight': '600' }}>Description</p>
-                                        <p className='text-sm mt-2' style={{ 'fontWeight': '500' }}>{"As a Software Engineer focused on rapid prototyping of ML models, you will be responsible for designing and implementing innovative AI models and algorithms. You will work closely with other researchers and engineers to prototype and test new ideas, and collaborate with cross-functional teams to bring your research to life."}</p>
+                                        <p className='text-sm mt-2' style={{ 'fontWeight': '500' }}>{jobs[selected].description}</p>
 
                                         <p className='text-sm mt-6 mb-3' style={{ 'fontWeight': '600' }}>Requirements</p>
                                         <div className="grid grid-cols-2 gap-y-6 gap-x-7">
                                             <div className="flex justify-between col-span-1">
 
-                                                <p className='text-sm' style={{ 'fontWeight': '500' }}>Degree: {'Required'}</p>
+                                                <p className='text-sm' style={{ 'fontWeight': '500' }}>Degree: {jobs[selected].degree_required ? 'Required' : 'Not Required'}</p>
+
+
 
 
                                             </div>
-                                            {/* {jobs[selected].degree_required && */}
-                                            <>
-                                                <div className="flex justify-between col-span-1">
-                                                    <p className='text-sm' style={{ 'fontWeight': '500' }}>GPA: {'3.50'}</p>
-                                                </div>
+                                            {jobs[selected].degree_required &&
+                                                <>
+                                                    <div className="flex justify-between col-span-1">
+                                                        <p className='text-sm' style={{ 'fontWeight': '500' }}>GPA: {jobs[selected].gpa}</p>
+                                                    </div>
 
+                                                    <div className="col-span-1">
+                                                        <p className='text-sm' style={{ 'fontWeight': '600' }}>Majors</p>
+                                                        <div className="mt-2 w-full  rounded-lg flex flex-wrap gap-x-1 gap-y-1">
+                                                            {jobs[selected].majors.map((major, index) => (
+                                                                <StatusTag status={major} />
+                                                            ))
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            }
+                                            {jobs[selected].skills &&
                                                 <div className="col-span-1">
-                                                    <p className='text-sm' style={{ 'fontWeight': '600' }}>Majors</p>
+                                                    <p className='text-sm text-black' style={{ 'fontWeight': '600' }}>Skills</p>
                                                     <div className="mt-2 w-full  rounded-lg flex flex-wrap gap-x-1 gap-y-1">
-                                                        {/* {jobs[selected].majors.map((major, index) => ( */}
-                                                        <StatusTag status={'Computer Science'} />
-                                                        <StatusTag status={'Data Science'} />
-                                                        <StatusTag status={'Engineering'} />
-                                                        <StatusTag status={'Electrical Engineering'} />
-                                                        {/* // ))} */}
+                                                        {jobs[selected].skills.map((major, index) => (
+                                                            <StatusTag status={major} />
+                                                        ))
+                                                        }
                                                     </div>
                                                 </div>
-                                            </>
-                                            {/* // } */}
-                                            {/* {jobs[selected].skills && */}
-                                            <div className="col-span-1">
-                                                <p className='text-sm' style={{ 'fontWeight': '600' }}>Skills</p>
-                                                <div className="mt-2 w-full  rounded-lg flex flex-wrap gap-x-1 gap-y-1">
-                                                    {/* {jobs[selected].skills.map((major, index) => ( */}
-                                                    <StatusTag status={'Web Development'} />
-                                                    <StatusTag status={'Object Oriented Programming'} />
-                                                    <StatusTag status={'Data Structures'} />
-                                                    {/* // ))} */}
-                                                </div>
-                                            </div>
-                                            {/* } */}
+                                            }
                                             {/* {jobs[selected].additional_questions &&
                                             <div className="col-span-full mt-2">
                                                 <p className='text-sm' style={{ 'fontWeight': '600' }}>Additional Questions</p>
@@ -103,25 +166,63 @@ export default function Page() {
 
                                             </div>
 
+
+
 } */}
-                                            <div className="col-span-full mt-2">
-                                                <p className='text-sm mb-5' style={{ 'fontWeight': '600' }}>Additional Questions</p>
-                                                {/* {jobs[selected].additional_questions.map((question, index) => ( */}
-                                                <div className='mt-2'>
-                                                    <p className='text-sm' style={{ 'fontWeight': '500' }}>{"Why do you want to work at Google?"}</p>
-                                                    <p className='text-sm mt-2' style={{ 'fontWeight': '400' }}>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}</p>
-                                                </div>
-                                                <div className='mt-2'>
-                                                    <p className='text-sm' style={{ 'fontWeight': '500' }}>{"Explain a time when you made a mistake. How did you go about resolving it?"}</p>
-                                                    <p className='text-sm mt-2' style={{ 'fontWeight': '400' }}>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}</p>
+
+                                            <hr className='col-span-full' />
+                                            <p className='text-md col-span-full' style={{ 'fontWeight': '600' }}>Your Application</p>
+                                            {jobs[selected] && jobs[selected].degree_required && applications[selected] &&
+                                                <>
+                                                    {applications[selected].school &&
+                                                        <div className="flex justify-between col-span-1">
+                                                            <p className='text-sm' style={{ 'fontWeight': '500' }}>School: {applications[selected].school}</p>
+                                                        </div>
+                                                    }
+                                                    {applications[selected].major &&
+                                                        <div className="flex justify-between col-span-1">
+                                                            <p className='text-sm' style={{ 'fontWeight': '500' }}>Major: {applications[selected].major}</p>
+                                                        </div>
+                                                    }
+                                                    {applications[selected].gpa &&
+                                                        <div className="flex justify-between col-span-1">
+                                                            <p className='text-sm' style={{ 'fontWeight': '500' }}>GPA: {applications[selected].gpa}.00</p>
+                                                        </div>
+                                                    }
+
+                                                </>
+                                            }
+                                            {applications[selected].skills &&
+
+
+
+                                                <div className="col-span-full">
+                                                    <p className='text-sm' style={{ 'fontWeight': '600' }}>Skills</p>
+                                                    <div className="mt-2 w-full  rounded-lg flex flex-wrap gap-x-1 gap-y-1">
+                                                        {applications[selected].skills.map((skill, index) => (
+                                                            <StatusTag status={skill} />
+                                                        ))
+
+                                                        }
+                                                    </div>
                                                 </div>
 
-                                                {/* ))} */}
+                                            }
+                                            <div className="col-span-full mt-2">
+                                                <p className='text-sm mb-5' style={{ 'fontWeight': '600' }}>Additional Questions</p>
+                                                {applications[selected].question_answers.map((question, index) => (
+                                                    <div className='mt-2'>
+                                                        <p className='text-sm' style={{ 'fontWeight': '500' }}>{question.question}</p>
+                                                        <p className='text-sm mt-2' style={{ 'fontWeight': '400' }}>{question.answer}</p>
+                                                    </div>
+
+
+                                                ))}
 
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </ScrollArea>
                                 </div>
                                 {/* <div className='flex flex-col px-3 p-2'>
                                     <h1 className='text-3xl font-regular py-2 text-blue-700'>{jobs[selected].company}</h1>
@@ -181,10 +282,13 @@ export default function Page() {
                                 </div> */}
                             </>
                         }
-                        <div className="flex justify-center w-full " style={{ 'backgroundColor': 'white' }}>
+                        {selected !== null && jobs.length > 0 && jobs[selected].contact && contactInfo &&
+                            <div className="flex justify-center w-full mb-5" style={{ 'backgroundColor': 'white' }}>
 
-                            <button className='bg-blue text-white rounded-lg w-max py-2 px-5 mb-4'>Contact Recruiter</button>
-                        </div>
+                                <ContactDialog contactInfo={contactInfo} />
+                            </div>
+
+                        }
                     </div>
                 </div>
             </Shell>

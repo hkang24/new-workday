@@ -12,11 +12,11 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-export default function RejectDialog({ contactInfo, changeStatus }) {
+export default function ContactDialog({ contactInfo }) {
     return (
-        <AlertDialog onOpenChange={() => changeStatus('Rejected')}>
+        <AlertDialog>
             <AlertDialogTrigger>
-                <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Reject</button>
+                <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Contact Recruiter</button>
             </AlertDialogTrigger>
             <AlertDialogContent className='w-[25rem]'>
                 <AlertDialogHeader>
@@ -28,10 +28,6 @@ export default function RejectDialog({ contactInfo, changeStatus }) {
                             <div className="col-span-1">
                                 <p className="font-medium text-black">Email</p>
                                 <p>{contactInfo.email}</p>
-                            </div>
-                            <div className="col-span-1">
-                                <p className="font-medium text-black">Phone Number</p>
-                                <p>{contactInfo.phone_number}</p>
                             </div>
                         </div>
                         {/* <p>{contactInfo.email}</p>

@@ -18,6 +18,8 @@ import {
 
 import { Button } from "@/components/ui/button"
 
+import Banner from "@/components/banners/banner"
+
 
 import JobRow from './components/jobRow';
 import StatusTag from '@/components/statusTag';
@@ -36,6 +38,9 @@ export default function Page() {
 
     const [jobs, setJobs] = useState([]);
     const [skills, setSkills] = useState([]);
+    const [selected, setSelected] = useState(null);
+
+    const [saved, setSaved] = useState(false);
 
     async function getUserData() {
         const { data, error } = await supabase.from('users').select('*');
@@ -44,16 +49,20 @@ export default function Page() {
         }
         console.log('data', data);
         setUser(data[0]);
+        return data[0];
     }
 
     function onAddSkill(e) {
         e.preventDefault();
         const skill = document.getElementById('skill').value;
 
+
         setSkills([...skills, skill]);
+        document.getElementById('skill').value = '';
     }
 
     async function onFormSubmit(event) {
+        console.log('onFormSubmit');
         event.preventDefault();
         const formElement = document.getElementById('form');
         console.log('formElement', formElement);
@@ -64,8 +73,10 @@ export default function Page() {
         const gpa = formData.get('gpa') ? parseFloat(formData.get('gpa')) : null;
         const school = formData.get('school') ? formData.get('school') : null;
         const additional_questions_answers = [];
-        for (let i = 0; i < jobs[selected].additional_questions.length; i++) {
-            additional_questions_answers.push({ question: jobs[selected].additional_questions[i], answer: formData.get(`question${i}`) });
+        if (jobs[selected].additional_questions && jobs[selected].additional_questions.length > 0) {
+            for (let i = 0; i < jobs[selected].additional_questions.length; i++) {
+                additional_questions_answers.push({ question: jobs[selected].additional_questions[i], answer: formData.get(`question${i}`) });
+            }
         }
         const { data, error } = await supabase
             .from('applications')
@@ -78,7 +89,8 @@ export default function Page() {
                     gpa,
                     school,
                     skills,
-                    question_answers: additional_questions_answers
+                    question_answers: additional_questions_answers,
+                    status: 'Unseen'
                 }
             ])
 
@@ -86,36 +98,77 @@ export default function Page() {
             console.error(error);
         }
         console.log('data', data);
+        const jobsCopy = [...jobs];
+
+        jobsCopy.splice(selected, 1);
+
+        setSkills([]);
+        setJobs(jobsCopy);
+        setSaved(true);
     }
 
-    useEffect(() => {
-        getUserData();
-    }, [])
+    // useEffect(() => {
+    //     getUserData();
+    // }, [])
 
 
     useEffect(() => {
-        async function fetchJobs() {
-            const { data, error } = await supabase
-                .from('jobs')
-                .select('*')
-            if (error) {
-                console.error(error);
-            } else {
-                console.log(data);
-                setJobs(data);
+        async function fetchData() {
+            const userData = await getUserData();
+            console.log('userData', userData);
+            if (!userData) return; // Ensure userData is not undefined before proceeding
+
+            async function fetchJobs() {
+                // First, get the list of job IDs from applications
+                const { data: applicationData, error: applicationError } = await supabase
+                    .from('applications')
+                    .select('job_id')
+                    .eq('applicant_id', userData.id);
+
+                if (applicationError) {
+                    console.error(applicationError);
+                    return;
+                }
+
+                // Extract job IDs
+                const appliedJobIds = applicationData.map(app => app.job_id);
+                console.log('appliedJobIds', appliedJobIds);
+
+                // Now, query jobs excluding the applied ones
+                const { data, error } = await supabase
+                    .from('jobs')
+                    .select('*')
+                    .eq('status', 'Open')
+                    .not('id', 'in', `(${appliedJobIds.join(',')})`);
+
+                if (error) {
+                    console.error(error);
+                } else {
+                    console.log(data);
+                    setJobs(data);
+                }
             }
+            fetchJobs();
         }
-        fetchJobs();
+        fetchData();
     }, [])
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setSaved(false)
+        }, 2000)
+        return () => clearTimeout(timer)
+    }, [saved])
 
 
-    const [selected, setSelected] = useState(null);
+
+
+
 
     return (
         <div>
-            <Shell>
-                <div className='flex flex-row min-h-screen'>
+            <Shell current='Explore'>
+                <div className='flex flex-row min-h-screen bg-white'>
                     <div className='flex flex-col grow-0 shrink-0 w-80 min-h-screen border border-blue bg-white'>
                         <h1 className='text-2xl font-regular text-center py-2 border border-blue bg-blue text-white py-3 rounded-b-lg'>Explore</h1>
                         <div className='flex flex-col divide-y divide-solid'>
@@ -128,12 +181,12 @@ export default function Page() {
 
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between grow relative p-7" style={{ 'backgroundColor': '#e9f5f9' }}>
+                    <div className="flex flex-col justify-between grow relative p-7 bg-white">
                         {selected === null ?
                             <div className='flex justify-center items-center h-full'>No job selected</div>
                             :
                             <>
-                                <div className='flex flex-col'>
+                                <ScrollArea className='flex flex-col h-[87vh]'>
                                     <h1 className='text-3xl font-regular pb-2 text-blue-700'>{jobs[selected].company}</h1>
                                     <p className='text-md' style={{ 'fontWeight': '600' }}>{jobs[selected].title}</p>
                                     <p className='text-md' style={{ 'fontWeight': '500' }}>{jobs[selected].location}</p>
@@ -189,7 +242,7 @@ export default function Page() {
 
                                     </div>
 
-                                </div>
+                                </ScrollArea>
                                 <div className='w-full flex justify-center'>
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
@@ -215,6 +268,7 @@ export default function Page() {
                                                                                     type="text"
                                                                                     name="first_name"
                                                                                     id="first_name"
+                                                                                    defaultValue={user?.first_name}
                                                                                     required
                                                                                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                                                 />
@@ -229,6 +283,7 @@ export default function Page() {
                                                                                     type="text"
                                                                                     name="last_name"
                                                                                     id="last_name"
+                                                                                    defaultValue={user?.last_name}
                                                                                     required
                                                                                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                                                 />
@@ -245,6 +300,7 @@ export default function Page() {
                                                                                             type="text"
                                                                                             name="school"
                                                                                             id="school"
+                                                                                            defaultValue={user?.school}
                                                                                             required
                                                                                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                                                         />
@@ -259,6 +315,7 @@ export default function Page() {
                                                                                             type="number"
                                                                                             name="gpa"
                                                                                             id="gpa"
+                                                                                            defaultValue={user?.gpa}
                                                                                             required
                                                                                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm input-ring placeholder:text-gray-400 input-ring sm:text-sm sm:leading-6"
                                                                                         />
@@ -328,7 +385,9 @@ export default function Page() {
                                                             </div>
                                                             <AlertDialogFooter className='pt-1'>
                                                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                                <AlertDialogAction><button>Submit</button></AlertDialogAction>
+                                                                <button type='submit'>
+                                                                    <AlertDialogAction>Submit</AlertDialogAction>
+                                                                </button>
                                                             </AlertDialogFooter>
 
 
@@ -345,6 +404,8 @@ export default function Page() {
                     </div>
                 </div>
             </Shell>
+            {saved && <Banner>Job Application Successfully Submitted</Banner>
+            }
         </div>
     )
 }

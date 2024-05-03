@@ -64,7 +64,7 @@ export default function Page() {
                                         type="text"
                                         autoComplete="first name"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:blue sm:text-sm sm:leading-6"
+                                        className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:blue sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ export default function Page() {
                                         type="text"
                                         autoComplete="last name"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                        className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
                                     />
                                 </div></div>
 
@@ -99,7 +99,7 @@ export default function Page() {
                                     type="text"
                                     
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
                                 />
                             </div>
                             </div>
@@ -115,7 +115,7 @@ export default function Page() {
                                     name="email"
                                     type="email"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -132,7 +132,7 @@ export default function Page() {
                                     name="password"
                                     type="password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>

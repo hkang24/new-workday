@@ -67,19 +67,20 @@ export default function JobsRecruiter() {
 
                 for (let i = 0; i < data.length; i++) {
                     let numApplicants = 0;
+                    console.log(data[i].id);
                     const { data: numData, error: numError } = await supabase.from('applications').select('*').eq('job_id', data[i].id);
                     if (numError) console.log('error', numError);
                     else {
-                        console.log(numData);
+                        console.log("numData", numData);
                         numApplicants = numData.length;
                     }
-                    if (data[i].status === 'open') {
-                        const { data: applicantsData, error: applicantsError } = await supabase.from('applications').select('*').eq('job_id', data[i].id).eq('status', 'unseen');
+                    if (data[i].status === 'Open') {
+                        const { data: applicantsData, error: applicantsError } = await supabase.from('applications').select('*').eq('job_id', data[i].id).eq('status', 'Unseen');
                         if (applicantsError) console.log('error', applicantsError);
                         else {
                             console.log(applicantsData);
 
-                            applicationsArr.push({ status: (applicantsData.length + ' unseen'), numApplicants: numApplicants });
+                            applicationsArr.push({ status: (applicantsData.length + ' Unseen'), numApplicants: numApplicants });
                         }
 
 
@@ -103,12 +104,12 @@ export default function JobsRecruiter() {
         if (error) console.log('error', error);
         else {
             console.log(data);
-            if (status === 'rejected') {
+            if (status === 'Rejected') {
                 const applicationsInfoCopy = [...applicationsInfo];
 
                 applicationsInfoCopy[selected].numApplicants = applicationsInfoCopy[selected].numApplicants - 1;
                 setApplicationsInfo(applicationsInfoCopy);
-            } else if (status === 'hired') {
+            } else if (status === 'Hired') {
                 const applicationsInfoCopy = [...applicationsInfo];
                 applicationsInfoCopy[selected].status = 'Fulfilled';
                 setApplicationsInfo(applicationsInfoCopy);
@@ -122,6 +123,14 @@ export default function JobsRecruiter() {
                 }
             }
         }
+
+        const applicantsCopy = [...applicants];
+        applicantsCopy.forEach((applicant, index) => {
+            if (applicant.id === selectedApplicant.id) {
+                applicant.status = status;
+            }
+        });
+        setApplicants(applicantsCopy);
     }
 
 
@@ -143,21 +152,29 @@ export default function JobsRecruiter() {
 
     useEffect(() => {
         if (selectedApplicant !== null) {
-            if (selectedApplicant.status === 'unseen') {
+            if (selectedApplicant.status === 'Unseen') {
                 const updateApp = async () => {
                     console.log(selectedApplicant.id);
-                    const { data, error } = await supabase.from('applications').update({ status: 'seen' }).match({ id: selectedApplicant.id });
+                    const { data, error } = await supabase.from('applications').update({ status: 'Seen' }).match({ id: selectedApplicant.id });
                     if (error) console.log('error', error);
                     else {
                         console.log(data);
                     }
                 }
                 updateApp();
+                const applicantsCopy = [...applicants];
+                applicantsCopy.forEach((applicant, index) => {
+                    if (applicant.id === selectedApplicant.id) {
+                        applicant.status = 'Seen';
+                    }
+                });
+                setApplicants(applicantsCopy);
+                // setApplicationsInfo(applicationsInfoCopy);
                 const numUnseen = applicationsInfo[selected].status.split(' ')[0];
                 const numSeen = parseInt(numUnseen) - 1;
                 setApplicationsInfo(applicationsInfo.map((info, index) => {
                     if (index === selected) {
-                        return { ...info, status: numSeen + ' unseen' };
+                        return { ...info, status: numSeen + ' Unseen' };
                     }
                     return info;
                 }));
@@ -183,7 +200,7 @@ export default function JobsRecruiter() {
 
     return (
         <div>
-            <Shell>
+            <Shell current='Jobs'>
                 <div className='flex flex-row min-h-screen'>
                     <div className='flex flex-col grow-0 shrink-0 w-80 min-h-screen border border-gray-200 bg-white'>
                         <h1 className='text-2xl font-regular text-center py-2 border border-blue bg-blue text-white py-3 rounded-b-lg'>Jobs</h1>
@@ -236,7 +253,7 @@ export default function JobsRecruiter() {
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200 bg-white">
                                                         {applicants.map((applicant, index) => (
-                                                            <tr key={index} onClick={() => setSelectedApplicant(applicant)} className={(selectedApplicant && applicant.id == selectedApplicant.id) ? 'bg-light-blue' : applicant.status === 'hired' ? 'bg-green-100' : applicant.status === 'rejected' ? 'bg-red-100' : ''}>
+                                                            <tr key={index} onClick={() => setSelectedApplicant(applicant)} className={(selectedApplicant && applicant.id == selectedApplicant.id) ? 'bg-light-blue' : applicant.status === 'Hired' ? 'bg-green-100' : applicant.status === 'Rejected' ? 'bg-red-100' : ''}>
                                                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 truncate">
                                                                     {applicant.first_name} {applicant.last_name}
                                                                 </td>
@@ -304,23 +321,23 @@ export default function JobsRecruiter() {
                                                                 ))}
 
 
-                                                                
+
                                                             </div>
                                                         </ScrollArea>
                                                         <div className="flex w-full justify-around">
-                                                            {(selectedApplicant.status === 'unseen' || selectedApplicant.status === 'seen' && jobs[selected].status === 'open') ?
+                                                            {(selectedApplicant.status === 'Unseen' || selectedApplicant.status === 'Seen' && jobs[selected].status === 'Open') ?
                                                                 <>
                                                                     <InterviewDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                     <RejectDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                 </>
-                                                                : (selectedApplicant.status === 'interview' && jobs[selected].status === 'open') ?
+                                                                : (selectedApplicant.status === 'Interview' && jobs[selected].status === 'Open') ?
                                                                     <>
                                                                         <HireDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                         <RejectDialog contactInfo={selectedContactInfo} changeStatus={changeApplicationStatus} />
                                                                     </>
                                                                     :
                                                                     <>
-                                                                    <ContactDialog contactInfo={selectedContactInfo} />
+                                                                        <ContactDialog contactInfo={selectedContactInfo} />
                                                                     </>
 
 

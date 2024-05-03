@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios';
 
 export default function Page() {
+    const router = useRouter();
 
     async function onFormSubmit(event) {
-        const router = useRouter();
         event.preventDefault();
 
 
@@ -49,87 +49,135 @@ export default function Page() {
                     </a>
                 </p>
             </div>
-            <div className="bg-white w-max mt-10 p-6 pb-6 shadow-sm border sm:rounded-md sm:px-12">
-                    <form id='form' className="space-y-6" method="POST" onSubmit={(e) => onFormSubmit(e)}>
-                        <div className="flex flex-row">
-                            <div className="flex-1 me-1 pr-8">
-                                <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-zinc-500">
-                                    First name
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="firstName"
-                                        name="firstName"
-                                        type="text"
-                                        autoComplete="first name"
-                                        required
-                                        className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:blue sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex-1 ms-1"><label htmlFor="lastName" className="block text-sm font-medium leading-6 text-zinc-500">
-                                Last name
+            <div className="bg-white w-[40rem] mt-10 p-6 pb-6 shadow-sm border sm:rounded-md sm:px-12">
+                <form id='form' className="space-y-6" onSubmit={(e) => onFormSubmit(e)}>
+                    <div className="flex flex-row">
+                        <div className="flex-1">
+                            <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-zinc-500">
+                                First name
                             </label>
-                                <div className="mt-2 flex flex-row">
-                                    <input
-                                        id="lastName"
-                                        name="lastName"
-                                        type="text"
-                                        autoComplete="last name"
-                                        required
-                                        className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
-                                    />
-                                </div></div>
-
-
+                            <div className="mt-2 mr-5">
+                                <input
+                                    id="firstName"
+                                    name="firstName"
+                                    type="text"
+                                    autoComplete="first name"
+                                    required
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:blue sm:text-sm sm:leading-6"
+                                />
+                            </div>
                         </div>
 
+                        <div className="flex-1"><label htmlFor="lastName" className="block text-sm font-medium leading-6 text-zinc-500">
+                            Last name
+                        </label>
+                            <div className="mt-2 flex flex-row">
+                                <input
+                                    id="lastName"
+                                    name="lastName"
+                                    type="text"
+                                    autoComplete="last name"
+                                    required
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                />
+                            </div></div>
 
+
+                    </div>
+                    <div className="flex flex-row">
                         
 
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-zinc-500">
-                                Email
+                        <div className="flex-1 "><label htmlFor="school" className="block text-sm font-medium leading-6 text-zinc-500">
+                            School
+                        </label>
+                            <div className="mt-2 flex flex-row mr-5">
+                                <input
+                                    id="school"
+                                    name="school"
+                                    type="text"
+                                    autoComplete="school"
+                                    required
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex-1"><label htmlFor="gpa" className="block text-sm font-medium leading-6 text-zinc-500">
+                            GPA
+                        </label>
+                            <div className="mt-2 flex flex-row">
+                                <input
+                                    id="gpa"
+                                    name="gpa"
+                                    type="number"
+                                    autoComplete="gpa"
+                                    required
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div className="flex-1 me-1">
+                            <label htmlFor="phone" className="block text-sm font-medium leading-6 text-zinc-500">
+                                Phone Number
                             </label>
                             <div className="mt-2">
                                 <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
+                                    id="phone"
+                                    name="phone"
+                                    type="number"
+                                    autoComplete="phone"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:blue sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
 
 
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium leading-6 text-zinc-500">
-                                Password
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
-                                />
-                            </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-zinc-500">
+                            Email
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                required
+                                className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                            />
                         </div>
-                        <div className='py-4'>
-                            <button
-                                type="submit"
-                                className="horizontal bg-blue w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold transition leading-6 text-white shadow-sm hover:bg-dark-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-blue"
-                            >
-                                Create Account
-                            </button>
-                        </div>
+                    </div>
 
-                    </form>
-                
+
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium leading-6 text-zinc-500">
+                            Password
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                className="px-2 block w-full rounded-md border-0 py-1.5 text-zinc-900 shadow-sm input-ring placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    <div className='py-4'>
+                        <button
+                            type="submit"
+                            className="horizontal bg-blue w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold transition leading-6 text-white shadow-sm hover:bg-dark-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-blue"
+                        >
+                            Create Account
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
         </div>
 

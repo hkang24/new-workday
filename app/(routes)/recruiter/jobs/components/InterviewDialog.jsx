@@ -14,7 +14,7 @@ import {
 
 export default function InterviewDialog({ contactInfo, changeStatus }) {
     return (
-        <AlertDialog onOpenChange={() => changeStatus('interview')}>
+        <AlertDialog onOpenChange={() => changeStatus('Interview')}>
             <AlertDialogTrigger>
                 <button className='bg-orange hover:bg-yellow text-white font-medium py-2 px-8 rounded-2xl text-sm'>Interview</button>
             </AlertDialogTrigger>

@@ -27,6 +27,7 @@ export default function Page() {
 
     const [user, setUser] = useState(null);
     const [degreeRequired, setDegreeRequired] = useState(false);
+    const [contact, setContact] = useState(false);
 
     const [majors, setMajors] = useState([]);
     const [skills, setSkills] = useState([]);
@@ -92,7 +93,9 @@ export default function Page() {
                 majors: majors,
                 skills: skills,
                 recruiter_id: user.id,
-                additional_questions: questions
+                additional_questions: questions,
+                status: 'Open',
+                contact: contact
             }]);
             if (res.error) {
                 console.log('error', res);
@@ -108,7 +111,9 @@ export default function Page() {
                 gpa: gpa,
                 degree_required: degreeRequired,
                 recruiter_id: user.id,
-                additional_questions: questions
+                additional_questions: questions,
+                status: 'Open',
+                contact: contact
             }]);
             if (res.error) {
                 console.log('error', res);
@@ -149,7 +154,7 @@ export default function Page() {
     return (
         // <div>
         <>
-            <Shell>
+            <Shell current='Create' >
                 <div className="px-7 py-7 max-h-screen bg-light-blue ">
 
                     <div className='bg-white rounded-lg p-5'>
@@ -327,6 +332,14 @@ export default function Page() {
                                                 
                                             </div>
                                         </div>
+                                        <div className="sm:col-span-1 mt-7 flex items-center">
+                                                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900 mr-3">
+                                                    Allow applicant to contact you?
+                                                </label>
+                                                {/* <div className="mt-5 w-full flex justify-center"> */}
+                                                    <Checkbox id='contact' checked={contact} onCheckedChange={setContact} />
+                                                {/* </div> */}
+                                            </div>
 
 
                                     </div>

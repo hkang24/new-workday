@@ -1,6 +1,27 @@
 
+"use client";
+
+import axios from 'axios';
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+    const router = useRouter();
+    
+    const [invalid, setInvalid] = useState(false);
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        await axios.post('/auth/login', formData)
+          .then(response => {
+            console.log(response.data);
+            router.push('/applicant/jobs');
+          })
+          .catch(error => setInvalid(true));
+    
+      }
     return (
 
             <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -25,7 +46,7 @@ export default function Page() {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" onSubmit={(e) => handleLogin(e)}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -37,7 +58,7 @@ export default function Page() {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -60,7 +81,7 @@ export default function Page() {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>

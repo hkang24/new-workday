@@ -23,7 +23,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Shell({ children }) {
+export default function Shell({ children , current}) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     return (
@@ -88,7 +88,7 @@ export default function Shell({ children }) {
                                                                 <a
                                                                     href={item.href}
                                                                     className={classNames(
-                                                                        item.current
+                                                                        current === item.name
                                                                             ? 'bg-gray-50 text-indigo-600'
                                                                             : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
                                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
@@ -96,7 +96,7 @@ export default function Shell({ children }) {
                                                                 >
                                                                     <item.icon
                                                                         className={classNames(
-                                                                            item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                                                                            current === item.name ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
                                                                             'h-6 w-6 shrink-0'
                                                                         )}
                                                                         aria-hidden="true"
@@ -137,7 +137,7 @@ export default function Shell({ children }) {
                                                 <a
                                                     href={item.href}
                                                     className={classNames(
-                                                        item.current
+                                                        current === item.name
                                                             ? 'bg-gray-50 text-blue'
                                                             : 'text-gray-700 hover:text-blue hover:bg-gray-50',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
@@ -145,7 +145,7 @@ export default function Shell({ children }) {
                                                 >
                                                     <item.icon
                                                         className={classNames(
-                                                            item.current ? 'text-blue' : 'text-gray-400 group-hover:text-blue',
+                                                            current === item.name ? 'text-blue' : 'text-gray-400 group-hover:text-blue',
                                                             'h-6 w-6 shrink-0'
                                                         )}
                                                         aria-hidden="true"
@@ -157,7 +157,7 @@ export default function Shell({ children }) {
                                     </ul>
                                 </li>
 
-                                <li className="-mx-6 mt-auto">
+                                {/* <li className="-mx-6 mt-auto">
                                     <a
                                         href="#"
                                         className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
@@ -170,7 +170,7 @@ export default function Shell({ children }) {
                                         <span className="sr-only">Your profile</span>
                                         <span aria-hidden="true">Tom Cook</span>
                                     </a>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>
