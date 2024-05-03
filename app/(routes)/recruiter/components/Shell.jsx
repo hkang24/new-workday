@@ -11,6 +11,7 @@ import {
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 const navigation = [
     { name: 'Jobs', href: '/recruiter/jobs', current: true, icon: FolderIcon },
@@ -73,11 +74,7 @@ export default function Shell({ children , current}) {
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
                                     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
                                         <div className="flex h-16 shrink-0 items-center">
-                                            <img
-                                                className="h-8 w-auto"
-                                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                                alt="Your Company"
-                                            />
+                                        <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
                                         </div>
                                         <nav className="flex flex-1 flex-col">
                                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -120,13 +117,9 @@ export default function Shell({ children , current}) {
                 {/* Static sidebar for desktop */}
                 <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-48 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+                    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 py-10">
                         <div className="flex h-16 shrink-0 items-center">
-                            <img
-                                className="h-10 w-full mt-5"
-                                src="https://upload.wikimedia.org/wikipedia/commons/8/80/Workday_logo.svg"
-                                alt="Your Company"
-                            />
+                        <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
                         </div>
                         <nav className="flex flex-1 flex-col mt-10">
                             <ul role="list" className="flex flex-1 flex-col gap-y-7">

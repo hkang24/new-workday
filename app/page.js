@@ -8,6 +8,8 @@ import {
   } from '@heroicons/react/20/solid'
   import { UserCircleIcon, WrenchScrewdriverIcon, UsersIcon } from '@heroicons/react/24/outline'
 
+  import Image from 'next/image';
+
   // import { useNavigate } from 'next/navigation';
 
   const primaryFeatures = [
@@ -195,11 +197,7 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-                <img
-                  className="h-20"
-                  src="https://upload.wikimedia.org/wikipedia/commons/8/80/Workday_logo.svg"
-                  alt="Your Company"
-                />
+                <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
 
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
