@@ -16,7 +16,7 @@ import {
     {
       name: 'Easy Sign-Up and Login',
       description:
-        'Quick and intuitive sign-up and login process. Get started in minutes with just your email or social media account. Say goodbye to complex job applications.',
+        'Quick and intuitive sign-up and login process: say goodbye to complex job applications.',
       href: '#',
       icon: UserCircleIcon,
     },
@@ -69,7 +69,7 @@ import {
 ];
 
   const stats = [
-    { id: 1, name: 'Companies that use Workday:', value: '15,000+' },
+    { id: 1, name: 'Companies that use EasyApply:', value: '15,000+' },
     { id: 2, name: 'Total job applications', value: '1 billion+' },
     { id: 3, name: 'Job placements success rate', value: '98.7%' },
     { id: 4, name: 'Users served worldwide', value: '100 million' },
@@ -197,7 +197,15 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+<<<<<<< HEAD
+                <img
+                  className="h-20"
+                  src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
+                  alt="Your Company"
+                />
+=======
                 <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
+>>>>>>> cbd07e8ae6df74c59c9c97683a0caf251755ba7f
 
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
@@ -205,8 +213,8 @@ import {
                   Making the job process easier, for employers and applicants!
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-300">
-                  Welcome to Workday – the ultimate platform for universities, employers, and employees alike!
-                  Whether you're a university, employer, or employee, Workday offers a seamless experience tailored to your needs.
+                  Welcome to EasyApply – the ultimate platform for universities, employers, and employees alike!
+                  Whether you're a university, employer, or employee, EasyApply offers a seamless experience tailored to your needs.
                   <br/><br/>
                   1. Apply for a job effortlessly, whether it's within a university or a company.
                   <br/><br/>
@@ -232,7 +240,7 @@ import {
               <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
                 <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
                   <img
-                    src="https://drive.google.com/drive/u/1/folders/1-t-_xDG1wNp2AIPmvHTM3tokYURNxmjN"
+                    src="https://www.dropbox.com/scl/fi/n64eyx7wqknrvql9jpedp/applicantflow.png?rlkey=1pzf1o6w6sqeqmnrf4f07lg28&st=vuhq1wp5&dl=0&raw=1"
                     alt="App screenshot"
                     width={100}
                     height={200}
@@ -294,7 +302,7 @@ import {
                 Everything you need to make the job process seamless!
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Workday has gone some significant changes that'll boost the user experience for everyone involved!
+                EasyApply has gone some significant changes that'll boost the user experience for everyone involved!
               </p>
             </div>
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
@@ -328,7 +336,7 @@ import {
                   <h2 className="text-base font-semibold leading-7 #ff7a0c"></h2>
                   <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Effortless Job Applications</p>
                   <p className="mt-6 text-lg leading-8 text-gray-300">
-                    Experience a seamless job application process with Workday. 
+                    Experience a seamless job application process with EasyApply. 
                     Our platform simplifies the process, allowing you to apply to jobs quickly and efficiently, 
                     so you can focus on what matters most: finding the perfect opportunity.
                   </p>
@@ -337,7 +345,7 @@ import {
             <div className="relative overflow-hidden pt-16">
               <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <img
-                  src="https://drive.google.com/thumbnail?id={1Of8EiDlSBjHbZ2aJiPKj5SyCwDqhNajp}&sz=w1000"
+                  src="https://www.dropbox.com/scl/fi/g707zcz02ec84l4ufwy25/JobApplication.png?rlkey=qdftflemyn2er2gnmgnx34pod&st=vjbrooit&dl=0&raw=1"
                   alt="App screenshot"
                   className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10"
                   width={2432}
@@ -371,7 +379,7 @@ import {
               Trusted by thousands of universities, employers, and employees worldwide
             </p>
             <p className="mt-6 text-lg sm:text-xl leading-8 text-gray-300">
-              Workday is committed to providing a seamless experience for universities, employers, and employees alike. 
+              EasyApply is committed to providing a seamless experience for universities, employers, and employees alike. 
               With our innovative platform, we empower organizations to streamline their processes and achieve their goals.
             </p>
           </div>
@@ -461,7 +469,7 @@ import {
                 ))}
               </div>
               <p className="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
-                &copy; 2024 Workday, Inc. All rights reserved.
+                &copy; EasyApply 2024, Inc. All rights reserved.
               </p>
             </div>
           </div>
