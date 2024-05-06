@@ -143,8 +143,8 @@ import {
       <div className="bg-dark-blue">
         <main>
           {/* Hero section */}
-          <div className="relative isolate overflow-hidden bg-dark-blue" >
-            {/* <svg
+          <div className="relative isolate overflow-hidden">
+            <svg
               className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
               aria-hidden="true"
             >
@@ -159,8 +159,8 @@ import {
                 >
                   <path d="M.5 200V.5H200" fill="none" />
                 </pattern>
-              </defs> */}
-              {/* <svg x="50%" y={-1} className="overflow-visible fill-blue-800/20">
+              </defs>
+              <svg x="50%" y={-1} className="overflow-visible fill-blue-800/20">
                 <path
                   d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
                   strokeWidth={0}
@@ -182,7 +182,15 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+<<<<<<< HEAD
+                <img
+                  className="h-20"
+                  src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
+                  alt="Your Company"
+                />
+=======
                 <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
+>>>>>>> cbd07e8ae6df74c59c9c97683a0caf251755ba7f
 
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
