@@ -144,7 +144,7 @@ import {
         <main className="bg-dark-blue">
           {/* Hero section */}
           <div className="relative isolate overflow-hidden bg-dark-blue" >
-            {/* <svg
+            <svg
               className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
               aria-hidden="true"
             >
@@ -159,15 +159,15 @@ import {
                 >
                   <path d="M.5 200V.5H200" fill="none" />
                 </pattern>
-              </defs> */}
-              {/* <svg x="50%" y={-1} className="overflow-visible fill-blue-800/20">
+              </defs>
+              {/* {/* <svg x="50%" y={-1} className="overflow-visible fill-blue-800/20">
                 <path
                   d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
                   strokeWidth={0}
                 />
               </svg>
               <rect width="100%" height="100%" strokeWidth={0} fill="url(#983e3e4c-de6d-4c3f-8d64-b9761d1534cc)" />
-            </svg> */}
+            </svg>
             <div
               className="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
               aria-hidden="true"
@@ -182,18 +182,13 @@ import {
             </div>
             <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-40 lg:flex lg:px-8 lg:pt-40">
               <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-<<<<<<< HEAD
                <img
-               src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
-               alt="Logo"
-               width={100}
-               height={200}
-               className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10"
-              />
-=======
-                <Image src={"/images/logo.png"} alt="logo" width={300} height={300} />
-
->>>>>>> 333de3731fd8e4e94b87148cf9af4d38dfe3b47a
+                src="https://www.dropbox.com/scl/fi/e2n0wx3uu2v3bicus09td/easyapplylogo.svg?rlkey=n0ecagfqq35j8lg8qpmww5p30&st=037gxqbr&dl=0&raw=1"
+                alt="Logo"
+                width={100}
+                height={200}
+                className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10"
+                />
                 <div className="mt-24 sm:mt-32 lg:mt-16">
                 </div>
                 <h1 className="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -225,8 +220,8 @@ import {
               </div>
               <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
                 <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-                  <img
-                    src="https://www.dropbox.com/scl/fi/n64eyx7wqknrvql9jpedp/applicantflow.png?rlkey=1pzf1o6w6sqeqmnrf4f07lg28&st=vuhq1wp5&dl=0&raw=1"
+                  <Image
+                    src="app/applicantflow.png"
                     alt="App screenshot"
                     width={100}
                     height={200}
@@ -235,7 +230,7 @@ import {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
   
           {/* Logo cloud */}
           <div className="mx-auto mt-8 max-w-7xl px-6 sm:mt-16 lg:px-8">
@@ -331,7 +326,7 @@ import {
             <div className="relative overflow-hidden pt-16">
               <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <img
-                  src="https://www.dropbox.com/scl/fi/g707zcz02ec84l4ufwy25/JobApplication.png?rlkey=qdftflemyn2er2gnmgnx34pod&st=vjbrooit&dl=0&raw=1"
+                  src="app/applicantflow.png"
                   alt="App screenshot"
                   className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10"
                   width={2432}
