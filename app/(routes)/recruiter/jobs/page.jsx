@@ -7,7 +7,6 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Shell from '../components/shell';
 
 import JobRow from './components/jobRow';
-import axios from 'axios';
 
 import styles from './styles.module.css';
 
@@ -182,15 +181,12 @@ export default function JobsRecruiter() {
             }
 
             const getContactInfo = async () => {
-                // const { data, error } = await supabase.from('users').select('email, phone_number').eq('id', selectedApplicant.applicant_id);
-                const response = await axios.get(`/api/getRecruiter?id=${selectedApplicant.applicant_id}`);
-                // if (error) console.log('error', error);
-                // else {
-                //     console.log(data[0]);
-                //     setSelectedContactInfo(data[0]);
-                // }
-                console.log(response.data);
-                setSelectedContactInfo(response.data);
+                const { data, error } = await supabase.from('users').select('email, phone_number').eq('id', selectedApplicant.applicant_id);
+                if (error) console.log('error', error);
+                else {
+                    console.log(data[0]);
+                    setSelectedContactInfo(data[0]);
+                }
             }
             getContactInfo();
         }
